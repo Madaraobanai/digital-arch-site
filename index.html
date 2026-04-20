@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL.ARCH | Engenharia de Performance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --promo: #ff3e3e;
+            --accent: #c5a059;
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --border: #1a1a1a;
+            --text-dim: #666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: var(--bg); color: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        /* HEADER & NAVIGATION */
+        .header-promo { background: var(--promo); color: #000; text-align: center; padding: 10px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; position: sticky; top: 0; z-index: 3000; }
+        nav { padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); position: sticky; top: 35px; z-index: 2000; }
+        .logo { font-weight: 900; font-size: 0.85rem; letter-spacing: 2px; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 0.7rem; font-weight: 600; margin-left: 20px; text-transform: uppercase; opacity: 0.6; transition: 0.3s; }
+        .nav-links a:hover { opacity: 1; color: var(--accent); }
+
+        /* SECTIONS COMMON */
+        section { padding: 100px 8%; border-bottom: 1px solid var(--border); }
+        .label { color: var(--accent); font-size: 0.6rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        h2 { font-size: 2rem; font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
+
+        /* HERO */
+        .hero { text-align: center; padding: 120px 8% 80px; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
+        .hero h1 { font-size: 3rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { color: var(--promo); }
+        .hero p { font-size: 1rem; color: var(--text-dim); max-width: 700px; margin: 0 auto 40px; }
+
+        /* QUEM SOMOS */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-text p { color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
+
+        /* COMO FUNCIONA (METODOLOGIA) */
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+        .step-card { padding: 40px; background: var(--surface); border: 1px solid var(--border); position: relative; }
+        .step-num { font-size: 3rem; font-weight: 900; color: #161616; position: absolute; top: 10px; right: 20px; z-index: 0; }
+        .step-card h3 { position: relative; z-index: 1; font-size: 1.1rem; margin-bottom: 15px; color: var(--accent); }
+        .step-card p { position: relative; z-index: 1; font-size: 0.85rem; color: var(--text-dim); }
+
+        /* PREÇOS & ESPECIFICAÇÕES */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .price-card { background: var(--surface); border: 1px solid var(--border); padding: 50px 30px; transition: 0.4s; position: relative; }
+        .price-card:hover { border-color: var(--promo); transform: translateY(-10px); }
+        .price-card.featured { border-color: var(--accent); box-shadow: 0 0 30px rgba(197, 160, 89, 0.1); }
+        
+        .price-card h3 { font-size: 1.2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .old-price { font-size: 0.85rem; color: #444; text-decoration: line-through; display: block; }
+        .new-price { font-size: 3rem; font-weight: 900; margin: 10px 0 30px; }
+        .new-price small { font-size: 1.2rem; }
+
+        .specs-list { list-style: none; text-align: left; margin-bottom: 40px; }
+        .specs-list li { font-size: 0.85rem; color: #888; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
+        .specs-list li::before { content: "→"; color: var(--accent); font-weight: 900; }
+        .specs-list li b { color: #fff; }
+
+        .btn-cta { display: block; width: 100%; padding: 20px; background: #fff; color: #000; text-decoration: none; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; text-align: center; transition: 0.3s; }
+        .btn-cta:hover { background: var(--promo); color: #fff; }
+        .featured .btn-cta { background: var(--accent); }
+
+        footer { padding: 80px 8%; text-align: center; background: #020202; }
+        .footer-logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; display: block; letter-spacing: 4px; }
+
+        @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.2rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="header-promo">PROMOÇÃO LIMITADA: 60% OFF EM TODOS OS SISTEMAS — RESTAM POUCAS VAGAS</div>
+
+    <nav>
+        <div class="logo">DIGITAL.ARCH</div>
+        <div class="nav-links">
+            <a href="#sobre">Sobre</a>
+            <a href="#metodologia">Método</a>
+            <a href="#precos">Preços</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <span class="label">High Performance Systems</span>
+        <h1>Sistemas que <span>Convertem</span>.<br>Engenharia que <span>Escala</span>.</h1>
+        <p>Não entregamos apenas "sites". Construímos máquinas de vendas otimizadas com tecnologia de ponta para empresas que não aceitam lentidão.</p>
+        <a href="#precos" class="btn-cta" style="display:inline-block; width:auto; padding: 20px 40px;">Ver Tabela de Investimento</a>
+    </header>
+
+    <section id="sobre">
+        <div class="about-grid">
+            <div class="about-text">
+                <span class="label">Quem Somos</span>
+                <h2>Transformamos código em faturamento.</h2>
+                <p>A <b>DIGITAL.ARCH</b> nasceu da necessidade de mercado por soluções digitais que realmente funcionam sob pressão. Enquanto agências comuns focam apenas no visual, nós focamos na <b>arquitetura</b>.</p>
+                <p>Nossa equipe é composta por engenheiros de software especialistas em conversão e tempo de resposta (LCP). Se o seu site demora mais de 2 segundos para carregar, você está perdendo dinheiro. Nós resolvemos isso.</p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); padding: 40px;">
+                <h3 style="color: var(--accent); margin-bottom: 15px;">Nossa Missão</h3>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Democratizar o acesso à tecnologia de elite (Cloud Global e Código Otimizado) para empresas de todos os tamanhos, começando com valores acessíveis e escala ilimitada.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="metodologia" style="background: #070707;">
+        <span class="label" style="text-align:center;">Como Funciona</span>
+        <h2 style="text-align:center;">O Fluxo da Performance</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <h3>Arquitetura</h3>
+                <p>Planejamos a estrutura do banco de dados e a jornada do seu cliente para máxima conversão.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <h3>Desenvolvimento</h3>
+                <p>Codificação limpa em frameworks modernos. Nada de templates pesados ou lentos.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <h3>Otimização</h3>
+                <p>Testes de estresse e compressão de ativos para garantir carregamento em sub-segundos.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">04</div>
+                <h3>Escala</h3>
+                <p>Entrega do sistema pronto para receber milhares de acessos simultâneos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="precos">
+        <span class="label" style="text-align:center;">Planos & Investimento</span>
+        <h2 style="text-align:center;">Escolha sua potência</h2>
+        
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Essencial</h3>
+                <span class="old-price">De R$ 129,99</span>
+                <div class="new-price"><small>R$</small>51,99</div>
+                <ul class="specs-list">
+                    <li><b>Single Page</b> de Alta Conversão</li>
+                    <li>Otimização para <b>Mobile</b></li>
+                    <li>Botão de <b>WhatsApp</b> Direto</li>
+                    <li>Hospedagem em <b>Cloud SSD</b></li>
+                    <li>SSL (Cadeado de Segurança) Grátis</li>
+                </ul>
+                <a href="https://wa.me/5587991297885?text=Olá! Quero o Plano ESSENCIAL por R$ 51,99." target="_blank" class="btn-cta">Contratar Plano</a>
+            </div>
+
+            <div class="price-card featured">
+                <span class="label" style="margin-bottom: 5px; color: #fff; background: var(--accent); display: inline-block; padding: 2px 10px;">Mais Vendido</span>
+                <h3 style="color: var(--accent);">Profissional</h3>
+                <span class="old-price">De R$ 219,99</span>
+                <div class="new-price" style="color: var(--accent);"><small>R$</small>87,99</div>
+                <ul class="specs-list">
+                    <li>Tudo do plano Essencial</li>
+                    <li><b>Catálogo Digital</b> ou Menu Interativo</li>
+                    <li>Painel de <b>Gestão de Conteúdo</b></li>
+                    <li>Integração com <b>Google Meu Negócio</b></li>
+                    <li>Suporte Prioritário via WhatsApp</li>
+                </ul>
+                <a href="https://wa.me/5587991297885?text=Olá! Quero o Plano PROFISSIONAL por R$ 87,99." target="_blank" class="btn-cta">Garantir Vaga</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <span class="old-price">De R$ 377,99</span>
+                <div class="new-price"><small>R$</small>151,19</div>
+                <ul class="specs-list">
+                    <li>Sistema <b>Multi-Páginas</b> Completo</li>
+                    <li>Blog ou Seção de Notícias</li>
+                    <li>Configuração de <b>E-mail Profissional</b></li>
+                    <li><b>SEO Avançado</b> para Busca Orgânica</li>
+                    <li>Relatório de Performance Mensal</li>
+                </ul>
+                <a href="https://wa.me/5587991297885?text=Olá! Quero o Plano ENTERPRISE por R$ 151,19." target="_blank" class="btn-cta">Contratar Enterprise</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span class="footer-logo">DIGITAL.ARCH</span>
+        <p style="color: var(--text-dim); font-size: 0.8rem; margin-bottom: 30px;">Engenharia de Software de Alta Performance em Petrolina - PE para o mundo.</p>
+        <div style="margin-bottom: 30px;">
+            <a href="#" style="color: #444; text-decoration: none; font-size: 0.65rem; margin: 0 10px;">POLÍTICA DE PRIVACIDADE</a>
+            <a href="#" style="color: #444; text-decoration: none; font-size: 0.65rem; margin: 0 10px;">TERMOS DE SERVIÇO</a>
+        </div>
+        <p style="font-size: 0.6rem; color: #222; letter-spacing: 2px;">&copy; 2026 DIGITAL.ARCH | TODOS OS DIREITOS RESERVADOS.</p>
+    </footer>
+
+</body>
+</html>

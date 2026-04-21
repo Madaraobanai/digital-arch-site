@@ -3,197 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIGITAL.ARCH | Engenharia de Performance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <title>ZaykAnimes | Portal Interativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Outfit:wght@400;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --promo: #ff3e3e;
-            --accent: #c5a059;
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --border: #1a1a1a;
-            --text-dim: #666;
+            --orange: #FF6400; 
+            --gold: #FFD700; 
+            --black: #050505;
+            --white: #FFFFFF;
+            --surface: #121212;
+            --border: #252525;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        body { background: var(--bg); color: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-        /* HEADER & NAVIGATION */
-        .header-promo { background: var(--promo); color: #000; text-align: center; padding: 10px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; position: sticky; top: 0; z-index: 3000; }
-        nav { padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); position: sticky; top: 35px; z-index: 2000; }
-        .logo { font-weight: 900; font-size: 0.85rem; letter-spacing: 2px; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 0.7rem; font-weight: 600; margin-left: 20px; text-transform: uppercase; opacity: 0.6; transition: 0.3s; }
-        .nav-links a:hover { opacity: 1; color: var(--accent); }
+        nav {
+            background: rgba(5, 5, 5, 0.95);
+            border-bottom: 2px solid var(--orange);
+            padding: 15px 6%;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .brand { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.4rem; text-transform: uppercase; }
+        .brand span { color: var(--orange); }
 
-        /* SECTIONS COMMON */
-        section { padding: 100px 8%; border-bottom: 1px solid var(--border); }
-        .label { color: var(--accent); font-size: 0.6rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; display: block; margin-bottom: 15px; }
-        h2 { font-size: 2rem; font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
+        #xp-display { color: var(--gold); font-weight: 900; font-size: 0.9rem; }
 
-        /* HERO */
-        .hero { text-align: center; padding: 120px 8% 80px; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
-        .hero h1 { font-size: 3rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
-        .hero h1 span { color: var(--promo); }
-        .hero p { font-size: 1rem; color: var(--text-dim); max-width: 700px; margin: 0 auto 40px; }
+        .auth-buttons { display: flex; gap: 10px; align-items: center; }
+        .btn-generic { background: transparent; color: var(--white); border: none; font-weight: 700; cursor: pointer; padding: 10px; text-transform: uppercase; font-size: 0.8rem; }
+        .btn-primary { background: var(--orange); color: var(--white); border: none; font-weight: 800; border-radius: 4px; padding: 12px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; transition: 0.2s; }
+        .btn-primary:active { transform: scale(0.98); opacity: 0.9; }
 
-        /* QUEM SOMOS */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .about-text p { color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-card {
+            background: var(--surface); border: 1px solid var(--border); width: 90%; max-width: 380px; padding: 30px; border-radius: 12px;
+        }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 0.7rem; color: #888; margin-bottom: 5px; font-weight: 700; }
+        .modal-card input {
+            width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 6px; outline: none; font-size: 1rem;
+        }
+        .modal-card input:focus { border-color: var(--orange); }
 
-        /* COMO FUNCIONA (METODOLOGIA) */
-        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .step-card { padding: 40px; background: var(--surface); border: 1px solid var(--border); position: relative; }
-        .step-num { font-size: 3rem; font-weight: 900; color: #161616; position: absolute; top: 10px; right: 20px; z-index: 0; }
-        .step-card h3 { position: relative; z-index: 1; font-size: 1.1rem; margin-bottom: 15px; color: var(--accent); }
-        .step-card p { position: relative; z-index: 1; font-size: 0.85rem; color: var(--text-dim); }
+        .toggle-text { font-size: 0.8rem; color: #888; text-align: center; margin-top: 15px; cursor: pointer; }
+        .toggle-text span { color: var(--orange); font-weight: 700; }
 
-        /* PREÇOS & ESPECIFICAÇÕES */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .price-card { background: var(--surface); border: 1px solid var(--border); padding: 50px 30px; transition: 0.4s; position: relative; }
-        .price-card:hover { border-color: var(--promo); transform: translateY(-10px); }
-        .price-card.featured { border-color: var(--accent); box-shadow: 0 0 30px rgba(197, 160, 89, 0.1); }
+        .btn-google {
+            width: 100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 6px; font-weight: 700; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        .game-viewport { max-width: 900px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .story-card { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; overflow: hidden; }
+        .visual-frame {
+            height: 300px; background: linear-gradient(to bottom, transparent, var(--surface)), url('https://images.unsplash.com/photo-1578632738981-4330c70d0639?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 30px;
+        }
+        .interaction-panel { padding: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .choice-card { border: 1px solid var(--border); padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; text-align: left; }
+        .choice-card:hover { border-color: var(--orange); background: rgba(255, 100, 0, 0.05); }
+        .choice-card b { color: var(--orange); font-size: 0.7rem; display: block; margin-bottom: 5px; }
         
-        .price-card h3 { font-size: 1.2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
-        .old-price { font-size: 0.85rem; color: #444; text-decoration: line-through; display: block; }
-        .new-price { font-size: 3rem; font-weight: 900; margin: 10px 0 30px; }
-        .new-price small { font-size: 1.2rem; }
-
-        .specs-list { list-style: none; text-align: left; margin-bottom: 40px; }
-        .specs-list li { font-size: 0.85rem; color: #888; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; }
-        .specs-list li::before { content: "→"; color: var(--accent); font-weight: 900; }
-        .specs-list li b { color: #fff; }
-
-        .btn-cta { display: block; width: 100%; padding: 20px; background: #fff; color: #000; text-decoration: none; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; text-align: center; transition: 0.3s; }
-        .btn-cta:hover { background: var(--promo); color: #fff; }
-        .featured .btn-cta { background: var(--accent); }
-
-        footer { padding: 80px 8%; text-align: center; background: #020202; }
-        .footer-logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; display: block; letter-spacing: 4px; }
-
-        @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.2rem; } }
+        @media (max-width: 600px) {
+            .interaction-panel { grid-template-columns: 1fr; }
+            .visual-frame { height: 200px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-promo">PROMOÇÃO LIMITADA: 60% OFF EM TODOS OS SISTEMAS — RESTAM POUCAS VAGAS</div>
-
     <nav>
-        <div class="logo">DIGITAL.ARCH</div>
-        <div class="nav-links">
-            <a href="#sobre">Sobre</a>
-            <a href="#metodologia">Método</a>
-            <a href="#precos">Preços</a>
+        <div class="brand">ZAYK<span>ANIMES</span></div>
+        <div id="xp-display">XP: 0</div>
+        <div class="auth-buttons" id="auth-area">
+            <button class="btn-generic" onclick="window.openAuthModal()">ENTRAR</button>
         </div>
     </nav>
 
-    <header class="hero">
-        <span class="label">High Performance Systems</span>
-        <h1>Sistemas que <span>Convertem</span>.<br>Engenharia que <span>Escala</span>.</h1>
-        <p>Não entregamos apenas "sites". Construímos máquinas de vendas otimizadas com tecnologia de ponta para empresas que não aceitam lentidão.</p>
-        <a href="#precos" class="btn-cta" style="display:inline-block; width:auto; padding: 20px 40px;">Ver Tabela de Investimento</a>
-    </header>
-
-    <section id="sobre">
-        <div class="about-grid">
-            <div class="about-text">
-                <span class="label">Quem Somos</span>
-                <h2>Transformamos código em faturamento.</h2>
-                <p>A <b>DIGITAL.ARCH</b> nasceu da necessidade de mercado por soluções digitais que realmente funcionam sob pressão. Enquanto agências comuns focam apenas no visual, nós focamos na <b>arquitetura</b>.</p>
-                <p>Nossa equipe é composta por engenheiros de software especialistas em conversão e tempo de resposta (LCP). Se o seu site demora mais de 2 segundos para carregar, você está perdendo dinheiro. Nós resolvemos isso.</p>
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-card">
+            <h2 id="modal-title" style="text-align:center; margin-bottom:20px; font-family:'Outfit';">LOGIN</h2>
+            
+            <div class="form-group">
+                <label>E-MAIL</label>
+                <input type="email" id="email" placeholder="seu@email.com">
             </div>
-            <div style="background: var(--surface); border: 1px solid var(--border); padding: 40px;">
-                <h3 style="color: var(--accent); margin-bottom: 15px;">Nossa Missão</h3>
-                <p style="font-size: 0.9rem; color: var(--text-dim);">Democratizar o acesso à tecnologia de elite (Cloud Global e Código Otimizado) para empresas de todos os tamanhos, começando com valores acessíveis e escala ilimitada.</p>
+            
+            <div class="form-group">
+                <label>SENHA</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+
+            <button class="btn-primary" id="main-auth-btn" style="width:100%">Acessar Multiverso</button>
+            
+            <div class="toggle-text" id="toggle-link">Não tem conta? <span>Cadastre-se</span></div>
+            
+            <button class="btn-google" id="google-btn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="16"> Entrar com Google
+            </button>
+            
+            <p onclick="window.closeAuthModal()" style="text-align:center; margin-top:20px; font-size:0.7rem; color:#555; cursor:pointer; text-transform:uppercase; letter-spacing:1px;">CANCELAR</p>
+        </div>
+    </div>
+
+    <main class="game-viewport">
+        <div class="story-card">
+            <div class="visual-frame">
+                <p style="font-size: 1.1rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">O portal está instável. Como pretendes estabilizar a tua conexão?</p>
+            </div>
+            <div class="interaction-panel">
+                <div class="choice-card" onclick="window.gameAction(100)"><b>01</b><p>Sincronizar Núcleo de Energia</p></div>
+                <div class="choice-card" onclick="window.gameAction(150)"><b>02</b><p>Injetar Protocolo de Bypass</p></div>
+                <div class="choice-card" onclick="window.gameAction(80)"><b>03</b><p>Aguardar Estabilização Natural</p></div>
+                <div class="choice-card" onclick="window.gameAction(200)"><b>04</b><p>Forçar Sobrecarga de Dados</p></div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <section id="metodologia" style="background: #070707;">
-        <span class="label" style="text-align:center;">Como Funciona</span>
-        <h2 style="text-align:center;">O Fluxo da Performance</h2>
-        <div class="steps-grid">
-            <div class="step-card">
-                <div class="step-num">01</div>
-                <h3>Arquitetura</h3>
-                <p>Planejamos a estrutura do banco de dados e a jornada do seu cliente para máxima conversão.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">02</div>
-                <h3>Desenvolvimento</h3>
-                <p>Codificação limpa em frameworks modernos. Nada de templates pesados ou lentos.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">03</div>
-                <h3>Otimização</h3>
-                <p>Testes de estresse e compressão de ativos para garantir carregamento em sub-segundos.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">04</div>
-                <h3>Escala</h3>
-                <p>Entrega do sistema pronto para receber milhares de acessos simultâneos.</p>
-            </div>
-        </div>
-    </section>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
 
-    <section id="precos">
-        <span class="label" style="text-align:center;">Planos & Investimento</span>
-        <h2 style="text-align:center;">Escolha sua potência</h2>
-        
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3>Essencial</h3>
-                <span class="old-price">De R$ 129,99</span>
-                <div class="new-price"><small>R$</small>51,99</div>
-                <ul class="specs-list">
-                    <li><b>Single Page</b> de Alta Conversão</li>
-                    <li>Otimização para <b>Mobile</b></li>
-                    <li>Botão de <b>WhatsApp</b> Direto</li>
-                    <li>Hospedagem em <b>Cloud SSD</b></li>
-                    <li>SSL (Cadeado de Segurança) Grátis</li>
-                </ul>
-                <a href="https://wa.me/5587991297885?text=Olá! Quero o Plano ESSENCIAL por R$ 51,99." target="_blank" class="btn-cta">Contratar Plano</a>
-            </div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAb1qfJ1UMQJXuPRQTSlMyjUIpanUJCouY",
+            authDomain: "bypass-8968d.firebaseapp.com",
+            databaseURL: "https://bypass-8968d-default-rtdb.firebaseio.com",
+            projectId: "bypass-8968d",
+            storageBucket: "bypass-8968d.firebasestorage.app",
+            messagingSenderId: "568360120676",
+            appId: "1:568360120676:web:954a00c998c9956badca71"
+        };
 
-            <div class="price-card featured">
-                <span class="label" style="margin-bottom: 5px; color: #fff; background: var(--accent); display: inline-block; padding: 2px 10px;">Mais Vendido</span>
-                <h3 style="color: var(--accent);">Profissional</h3>
-                <span class="old-price">De R$ 219,99</span>
-                <div class="new-price" style="color: var(--accent);"><small>R$</small>87,99</div>
-                <ul class="specs-list">
-                    <li>Tudo do plano Essencial</li>
-                    <li><b>Catálogo Digital</b> ou Menu Interativo</li>
-                    <li>Painel de <b>Gestão de Conteúdo</b></li>
-                    <li>Integração com <b>Google Meu Negócio</b></li>
-                    <li>Suporte Prioritário via WhatsApp</li>
-                </ul>
-                <a href="https://wa.me/5587991297885?text=Olá! Quero o Plano PROFISSIONAL por R$ 87,99." target="_blank" class="btn-cta">Garantir Vaga</a>
-            </div>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
 
-            <div class="price-card">
-                <h3>Enterprise</h3>
-                <span class="old-price">De R$ 377,99</span>
-                <div class="new-price"><small>R$</small>151,19</div>
-                <ul class="specs-list">
-                    <li>Sistema <b>Multi-Páginas</b> Completo</li>
-                    <li>Blog ou Seção de Notícias</li>
-                    <li>Configuração de <b>E-mail Profissional</b></li>
-                    <li><b>SEO Avançado</b> para Busca Orgânica</li>
-                    <li>Relatório de Performance Mensal</li>
-                </ul>
-                <a href="https://wa.me/5587991297885?text=Olá! Quero o Plano ENTERPRISE por R$ 151,19." target="_blank" class="btn-cta">Contratar Enterprise</a>
-            </div>
-        </div>
-    </section>
+        let isLogin = true;
 
-    <footer>
-        <span class="footer-logo">DIGITAL.ARCH</span>
-        <p style="color: var(--text-dim); font-size: 0.8rem; margin-bottom: 30px;">Engenharia de Software de Alta Performance em Petrolina - PE para o mundo.</p>
-        <div style="margin-bottom: 30px;">
-            <a href="#" style="color: #444; text-decoration: none; font-size: 0.65rem; margin: 0 10px;">POLÍTICA DE PRIVACIDADE</a>
-            <a href="#" style="color: #444; text-decoration: none; font-size: 0.65rem; margin: 0 10px;">TERMOS DE SERVIÇO</a>
-        </div>
-        <p style="font-size: 0.6rem; color: #222; letter-spacing: 2px;">&copy; 2026 DIGITAL.ARCH | TODOS OS DIREITOS RESERVADOS.</p>
-    </footer>
+        // FUNÇÕES GLOBAIS
+        window.openAuthModal = () => document.getElementById('auth-modal').style.display = 'flex';
+        window.closeAuthModal = () => document.getElementById('auth-modal').style.display = 'none';
 
+        // ALTERNAR LOGIN/CADASTRO
+        document.getElementById('toggle-link').onclick = () => {
+            isLogin = !isLogin;
+            document.getElementById('modal-title').innerText = isLogin ? "LOGIN" : "CADASTRO";
+            document.getElementById('main-auth-btn').innerText = isLogin ? "Acessar Multiverso" : "Criar Conta";
+            document.getElementById('toggle-link').innerHTML = isLogin ? "Não tem conta? <span>Cadastre-se</span>" : "Já tem conta? <span>Faça Login</span>";
+        };
+
+        // SUBMIT EMAIL/SENHA
+        document.getElementById('main-auth-btn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            if(!email || !pass) return alert("Preencha todos os campos");
+            
+            try {
+                if (isLogin) await signInWithEmailAndPassword(auth, email, pass);
+                else await createUserWithEmailAndPassword(auth, email, pass);
+                window.closeAuthModal();
+            } catch (e) { alert("Erro: " + e.message); }
+        };
+
+        // GOOGLE (USANDO REDIRECT PARA MOBILE)
+        document.getElementById('google-btn').onclick = async () => {
+            try {
+                await signInWithRedirect(auth, provider);
+            } catch (e) { alert("Erro ao redirecionar: " + e.message); }
+        };
+
+        // CAPTURAR RESULTADO DO REDIRECT (GOOGLE)
+        getRedirectResult(auth).catch((error) => {
+            if(error.code !== "auth/no-auth-event") console.error("Erro no retorno do Google:", error.message);
+        });
+
+        // MONITOR DE USUÁRIO
+        onAuthStateChanged(auth, async (user) => {
+            const authArea = document.getElementById('auth-area');
+            const xpDisplay = document.getElementById('xp-display');
+            
+            if (user) {
+                authArea.innerHTML = `<button class="btn-generic" id="logout-btn">SAIR</button>`;
+                document.getElementById('logout-btn').onclick = () => signOut(auth);
+                
+                // Carregar XP do Banco
+                const snap = await get(ref(db, 'users/' + user.uid));
+                if (snap.exists()) {
+                    xpDisplay.innerText = `XP: ${snap.val().xp || 0}`;
+                }
+            } else {
+                authArea.innerHTML = `<button class="btn-generic" onclick="window.openAuthModal()">ENTRAR</button>`;
+                xpDisplay.innerText = "XP: 0";
+            }
+        });
+
+        // AÇÃO DO JOGO
+        window.gameAction = async (pontos) => {
+            const user = auth.currentUser;
+            if (!user) {
+                window.openAuthModal();
+                return;
+            }
+
+            const userRef = ref(db, 'users/' + user.uid);
+            const snap = await get(userRef);
+            let total = (snap.exists() ? (snap.val().xp || 0) : 0) + pontos;
+
+            try {
+                await set(userRef, { 
+                    xp: total, 
+                    name: user.displayName || user.email.split('@')[0],
+                    updatedAt: new Date().toISOString()
+                });
+                document.getElementById('xp-display').innerText = `XP: ${total}`;
+                alert(`Sucesso! Ganhaste ${pontos} de XP.`);
+            } catch (e) {
+                console.error(e);
+                alert("Erro ao guardar progresso. Verifica as regras do teu banco de dados.");
+            }
+        };
+    </script>
 </body>
 </html>

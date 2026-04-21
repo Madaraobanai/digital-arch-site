@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hashtag Generator</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5689652631420760"
+     crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<h1>🔥 Hashtag Generator</h1>
+
+<input id="topic" placeholder="Enter topic">
+<br>
+<button onclick="gerar()">Generate</button>
+
+<p id="tags"></p>
+
+<script>
+function gerar() {
+  let t = document.getElementById("topic").value;
+  let tags = `#${t} #viral #fyp #trending #explore`;
+  document.getElementById("tags").innerText = tags;
+}
+</script>
+
+</body>
+</html>

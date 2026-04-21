@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Word Counter</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5689652631420760"
+     crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<h1>📝 Word Counter</h1>
+
+<textarea id="text" rows="6" cols="30"></textarea>
+<br>
+<button onclick="contar()">Count</button>
+
+<p id="resultado"></p>
+
+<script>
+function contar() {
+  let texto = document.getElementById("text").value;
+  let palavras = texto.trim().split(/\s+/).length;
+  document.getElementById("resultado").innerText = palavras + " words";
+}
+</script>
+
+</body>
+</html>

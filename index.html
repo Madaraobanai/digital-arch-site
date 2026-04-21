@@ -18,6 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
+        /* HEADER */
         nav {
             background: rgba(5, 5, 5, 0.95);
             border-bottom: 2px solid var(--orange);
@@ -35,6 +36,7 @@
         .btn-primary { background: var(--orange); color: var(--white); border: none; font-weight: 800; border-radius: 4px; padding: 12px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; transition: 0.2s; }
         .btn-primary:active { transform: scale(0.98); opacity: 0.9; }
 
+        /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000;
@@ -56,6 +58,7 @@
             width: 100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 6px; font-weight: 700; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
+        /* GAME CONTENT */
         .game-viewport { max-width: 900px; margin: 40px auto; padding: 0 20px; text-align: center; }
         .story-card { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; overflow: hidden; }
         .visual-frame {
@@ -97,7 +100,7 @@
                 <input type="password" id="password" placeholder="••••••••">
             </div>
 
-            <button class="btn-primary" id="main-auth-btn" style="width:100%">Acessar Multiverso</button>
+            <button class="btn-primary" id="main-auth-btn" style="width:100%">Acessar Portal</button>
             
             <div class="toggle-text" id="toggle-link">Não tem conta? <span>Cadastre-se</span></div>
             
@@ -125,7 +128,18 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { 
+            getAuth, 
+            signInWithRedirect, 
+            GoogleAuthProvider, 
+            onAuthStateChanged, 
+            signOut, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            getRedirectResult,
+            setPersistence,
+            browserLocalPersistence 
+        } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
         import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
 
         const firebaseConfig = {
@@ -143,6 +157,9 @@
         const db = getDatabase(app);
         const provider = new GoogleAuthProvider();
 
+        // PERSISTÊNCIA: Mantém logado ao recarregar
+        setPersistence(auth, browserLocalPersistence);
+
         let isLogin = true;
 
         // FUNÇÕES GLOBAIS
@@ -153,7 +170,7 @@
         document.getElementById('toggle-link').onclick = () => {
             isLogin = !isLogin;
             document.getElementById('modal-title').innerText = isLogin ? "LOGIN" : "CADASTRO";
-            document.getElementById('main-auth-btn').innerText = isLogin ? "Acessar Multiverso" : "Criar Conta";
+            document.getElementById('main-auth-btn').innerText = isLogin ? "Acessar Portal" : "Criar Conta";
             document.getElementById('toggle-link').innerHTML = isLogin ? "Não tem conta? <span>Cadastre-se</span>" : "Já tem conta? <span>Faça Login</span>";
         };
 
@@ -170,28 +187,29 @@
             } catch (e) { alert("Erro: " + e.message); }
         };
 
-        // GOOGLE (USANDO REDIRECT PARA MOBILE)
+        // GOOGLE REDIRECT
         document.getElementById('google-btn').onclick = async () => {
             try {
                 await signInWithRedirect(auth, provider);
-            } catch (e) { alert("Erro ao redirecionar: " + e.message); }
+            } catch (e) { alert("Erro: " + e.message); }
         };
 
-        // CAPTURAR RESULTADO DO REDIRECT (GOOGLE)
+        // CAPTURAR RESULTADO DO REDIRECT
         getRedirectResult(auth).catch((error) => {
-            if(error.code !== "auth/no-auth-event") console.error("Erro no retorno do Google:", error.message);
+            if(error.code !== "auth/no-auth-event") console.error("Erro Google:", error.message);
         });
 
-        // MONITOR DE USUÁRIO
+        // MONITOR DE ESTADO
         onAuthStateChanged(auth, async (user) => {
             const authArea = document.getElementById('auth-area');
             const xpDisplay = document.getElementById('xp-display');
             
             if (user) {
                 authArea.innerHTML = `<button class="btn-generic" id="logout-btn">SAIR</button>`;
-                document.getElementById('logout-btn').onclick = () => signOut(auth);
+                document.getElementById('logout-btn').onclick = () => {
+                    signOut(auth).then(() => window.location.reload());
+                };
                 
-                // Carregar XP do Banco
                 const snap = await get(ref(db, 'users/' + user.uid));
                 if (snap.exists()) {
                     xpDisplay.innerText = `XP: ${snap.val().xp || 0}`;
@@ -210,6 +228,7 @@
                 return;
             }
 
+            const xpDisplay = document.getElementById('xp-display');
             const userRef = ref(db, 'users/' + user.uid);
             const snap = await get(userRef);
             let total = (snap.exists() ? (snap.val().xp || 0) : 0) + pontos;
@@ -220,11 +239,10 @@
                     name: user.displayName || user.email.split('@')[0],
                     updatedAt: new Date().toISOString()
                 });
-                document.getElementById('xp-display').innerText = `XP: ${total}`;
-                alert(`Sucesso! Ganhaste ${pontos} de XP.`);
+                xpDisplay.innerText = `XP: ${total}`;
+                alert(`Progresso salvo! +${pontos} XP.`);
             } catch (e) {
-                console.error(e);
-                alert("Erro ao guardar progresso. Verifica as regras do teu banco de dados.");
+                alert("Erro ao salvar progresso.");
             }
         };
     </script>

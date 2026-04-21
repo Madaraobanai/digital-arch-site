@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bio Generator</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<h1>🧠 Bio Generator</h1>
+
+<button onclick="gerar()">Generate Bio</button>
+<p id="bio"></p>
+
+<script>
+const bios = [
+"Dream big 🚀",
+"Hustle every day 💸",
+"Stay focused 🔥",
+"Creating my future 🌍"
+];
+
+function gerar() {
+  let r = bios[Math.floor(Math.random() * bios.length)];
+  document.getElementById("bio").innerText = r;
+}
+</script>
+
+</body>
+</html>

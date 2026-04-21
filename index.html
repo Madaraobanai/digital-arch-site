@@ -1,250 +1,38 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZaykAnimes | Portal Interativo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Outfit:wght@400;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --orange: #FF6400; 
-            --gold: #FFD700; 
-            --black: #050505;
-            --white: #FFFFFF;
-            --surface: #121212;
-            --border: #252525;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
-
-        /* HEADER */
-        nav {
-            background: rgba(5, 5, 5, 0.95);
-            border-bottom: 2px solid var(--orange);
-            padding: 15px 6%;
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 1000;
-        }
-        .brand { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.4rem; text-transform: uppercase; }
-        .brand span { color: var(--orange); }
-
-        #xp-display { color: var(--gold); font-weight: 900; font-size: 0.9rem; }
-
-        .auth-buttons { display: flex; gap: 10px; align-items: center; }
-        .btn-generic { background: transparent; color: var(--white); border: none; font-weight: 700; cursor: pointer; padding: 10px; text-transform: uppercase; font-size: 0.8rem; }
-        .btn-primary { background: var(--orange); color: var(--white); border: none; font-weight: 800; border-radius: 4px; padding: 12px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; transition: 0.2s; }
-        .btn-primary:active { transform: scale(0.98); opacity: 0.9; }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000;
-        }
-        .modal-card {
-            background: var(--surface); border: 1px solid var(--border); width: 90%; max-width: 380px; padding: 30px; border-radius: 12px;
-        }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; font-size: 0.7rem; color: #888; margin-bottom: 5px; font-weight: 700; }
-        .modal-card input {
-            width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 6px; outline: none; font-size: 1rem;
-        }
-        .modal-card input:focus { border-color: var(--orange); }
-
-        .toggle-text { font-size: 0.8rem; color: #888; text-align: center; margin-top: 15px; cursor: pointer; }
-        .toggle-text span { color: var(--orange); font-weight: 700; }
-
-        .btn-google {
-            width: 100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 6px; font-weight: 700; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        /* GAME CONTENT */
-        .game-viewport { max-width: 900px; margin: 40px auto; padding: 0 20px; text-align: center; }
-        .story-card { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; overflow: hidden; }
-        .visual-frame {
-            height: 300px; background: linear-gradient(to bottom, transparent, var(--surface)), url('https://images.unsplash.com/photo-1578632738981-4330c70d0639?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 30px;
-        }
-        .interaction-panel { padding: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .choice-card { border: 1px solid var(--border); padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; text-align: left; }
-        .choice-card:hover { border-color: var(--orange); background: rgba(255, 100, 0, 0.05); }
-        .choice-card b { color: var(--orange); font-size: 0.7rem; display: block; margin-bottom: 5px; }
-        
-        @media (max-width: 600px) {
-            .interaction-panel { grid-template-columns: 1fr; }
-            .visual-frame { height: 200px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Free Online Tools</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <nav>
-        <div class="brand">ZAYK<span>ANIMES</span></div>
-        <div id="xp-display">XP: 0</div>
-        <div class="auth-buttons" id="auth-area">
-            <button class="btn-generic" onclick="window.openAuthModal()">ENTRAR</button>
-        </div>
-    </nav>
+<h1>🌍 Free Online Tools</h1>
+<p>Simple tools to make your life easier</p>
 
-    <div class="modal-overlay" id="auth-modal">
-        <div class="modal-card">
-            <h2 id="modal-title" style="text-align:center; margin-bottom:20px; font-family:'Outfit';">LOGIN</h2>
-            
-            <div class="form-group">
-                <label>E-MAIL</label>
-                <input type="email" id="email" placeholder="seu@email.com">
-            </div>
-            
-            <div class="form-group">
-                <label>SENHA</label>
-                <input type="password" id="password" placeholder="••••••••">
-            </div>
+<div class="grid">
+  <a href="tools/password.html">🔐 Password Generator</a>
+  <a href="tools/qr.html">📱 QR Code Generator</a>
+  <a href="tools/bio.html">🧠 Bio Generator</a>
+  <a href="tools/hashtag.html">🔥 Hashtag Generator</a>
+  <a href="tools/wordcounter.html">📝 Word Counter</a>
+</div>
 
-            <button class="btn-primary" id="main-auth-btn" style="width:100%">Acessar Portal</button>
-            
-            <div class="toggle-text" id="toggle-link">Não tem conta? <span>Cadastre-se</span></div>
-            
-            <button class="btn-google" id="google-btn">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="16"> Entrar com Google
-            </button>
-            
-            <p onclick="window.closeAuthModal()" style="text-align:center; margin-top:20px; font-size:0.7rem; color:#555; cursor:pointer; text-transform:uppercase; letter-spacing:1px;">CANCELAR</p>
-        </div>
-    </div>
-
-    <main class="game-viewport">
-        <div class="story-card">
-            <div class="visual-frame">
-                <p style="font-size: 1.1rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">O portal está instável. Como pretendes estabilizar a tua conexão?</p>
-            </div>
-            <div class="interaction-panel">
-                <div class="choice-card" onclick="window.gameAction(100)"><b>01</b><p>Sincronizar Núcleo de Energia</p></div>
-                <div class="choice-card" onclick="window.gameAction(150)"><b>02</b><p>Injetar Protocolo de Bypass</p></div>
-                <div class="choice-card" onclick="window.gameAction(80)"><b>03</b><p>Aguardar Estabilização Natural</p></div>
-                <div class="choice-card" onclick="window.gameAction(200)"><b>04</b><p>Forçar Sobrecarga de Dados</p></div>
-            </div>
-        </div>
-    </main>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithRedirect, 
-            GoogleAuthProvider, 
-            onAuthStateChanged, 
-            signOut, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword, 
-            getRedirectResult,
-            setPersistence,
-            browserLocalPersistence 
-        } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAb1qfJ1UMQJXuPRQTSlMyjUIpanUJCouY",
-            authDomain: "bypass-8968d.firebaseapp.com",
-            databaseURL: "https://bypass-8968d-default-rtdb.firebaseio.com",
-            projectId: "bypass-8968d",
-            storageBucket: "bypass-8968d.firebasestorage.app",
-            messagingSenderId: "568360120676",
-            appId: "1:568360120676:web:954a00c998c9956badca71"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-        const provider = new GoogleAuthProvider();
-
-        // PERSISTÊNCIA: Mantém logado ao recarregar
-        setPersistence(auth, browserLocalPersistence);
-
-        let isLogin = true;
-
-        // FUNÇÕES GLOBAIS
-        window.openAuthModal = () => document.getElementById('auth-modal').style.display = 'flex';
-        window.closeAuthModal = () => document.getElementById('auth-modal').style.display = 'none';
-
-        // ALTERNAR LOGIN/CADASTRO
-        document.getElementById('toggle-link').onclick = () => {
-            isLogin = !isLogin;
-            document.getElementById('modal-title').innerText = isLogin ? "LOGIN" : "CADASTRO";
-            document.getElementById('main-auth-btn').innerText = isLogin ? "Acessar Portal" : "Criar Conta";
-            document.getElementById('toggle-link').innerHTML = isLogin ? "Não tem conta? <span>Cadastre-se</span>" : "Já tem conta? <span>Faça Login</span>";
-        };
-
-        // SUBMIT EMAIL/SENHA
-        document.getElementById('main-auth-btn').onclick = async () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('password').value;
-            if(!email || !pass) return alert("Preencha todos os campos");
-            
-            try {
-                if (isLogin) await signInWithEmailAndPassword(auth, email, pass);
-                else await createUserWithEmailAndPassword(auth, email, pass);
-                window.closeAuthModal();
-            } catch (e) { alert("Erro: " + e.message); }
-        };
-
-        // GOOGLE REDIRECT
-        document.getElementById('google-btn').onclick = async () => {
-            try {
-                await signInWithRedirect(auth, provider);
-            } catch (e) { alert("Erro: " + e.message); }
-        };
-
-        // CAPTURAR RESULTADO DO REDIRECT
-        getRedirectResult(auth).catch((error) => {
-            if(error.code !== "auth/no-auth-event") console.error("Erro Google:", error.message);
-        });
-
-        // MONITOR DE ESTADO
-        onAuthStateChanged(auth, async (user) => {
-            const authArea = document.getElementById('auth-area');
-            const xpDisplay = document.getElementById('xp-display');
-            
-            if (user) {
-                authArea.innerHTML = `<button class="btn-generic" id="logout-btn">SAIR</button>`;
-                document.getElementById('logout-btn').onclick = () => {
-                    signOut(auth).then(() => window.location.reload());
-                };
-                
-                const snap = await get(ref(db, 'users/' + user.uid));
-                if (snap.exists()) {
-                    xpDisplay.innerText = `XP: ${snap.val().xp || 0}`;
-                }
-            } else {
-                authArea.innerHTML = `<button class="btn-generic" onclick="window.openAuthModal()">ENTRAR</button>`;
-                xpDisplay.innerText = "XP: 0";
-            }
-        });
-
-        // AÇÃO DO JOGO
-        window.gameAction = async (pontos) => {
-            const user = auth.currentUser;
-            if (!user) {
-                window.openAuthModal();
-                return;
-            }
-
-            const xpDisplay = document.getElementById('xp-display');
-            const userRef = ref(db, 'users/' + user.uid);
-            const snap = await get(userRef);
-            let total = (snap.exists() ? (snap.val().xp || 0) : 0) + pontos;
-
-            try {
-                await set(userRef, { 
-                    xp: total, 
-                    name: user.displayName || user.email.split('@')[0],
-                    updatedAt: new Date().toISOString()
-                });
-                xpDisplay.innerText = `XP: ${total}`;
-                alert(`Progresso salvo! +${pontos} XP.`);
-            } catch (e) {
-                alert("Erro ao salvar progresso.");
-            }
-        };
-    </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+<footer>
+  <a href="privacy.html">Privacy</a> |
+  <a href="terms.html">Terms</a> |
+  <a href="contact.html">Contact</a>
+</footer>

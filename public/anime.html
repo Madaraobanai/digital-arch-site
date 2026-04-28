@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Anime</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- ESQUERDA -->
+  <div class="left">
+
+    <h1 id="animeTitle"><div id="video-container" style="width: 100%; aspect-ratio: 16/9; background: #000;">
+    <iframe id="video-player" src="" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+</div>
+</h1>
+
+    <!-- 🎬 PLAYER -->
+    <div class="player">
+      <iframe id="videoPlayer" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <p class="desc"></p>
+
+    <!-- 📚 EPISÓDIOS -->
+    <h2>Episódios</h2>
+    <div id="episodes"></div>
+
+    <hr>
+
+    <!-- 💭 COMENTÁRIOS -->
+    <h2>Comentários</h2>
+    <div id="comments"></div>
+
+    <input id="commentInput" placeholder="Comente..." />
+    <button onclick="sendComment()">Comentar</button>
+
+  </div>
+
+  <!-- DIREITA -->
+  <div class="right">
+
+    <h2>💬 Chat</h2>
+    <div id="chat"></div>
+
+    <input id="msg" placeholder="Mensagem..." />
+    <button onclick="sendMessage()">Enviar</button>
+
+  </div>
+
+</div>
+
+<script type="module" src="app.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// 🎯 carregar anime
+async function loadAnime() {
+  const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+  const data = await res.json();
+  const anime = data.data;
+
+  document.getElementById("animeTitle").innerText = anime.title;
+  document.querySelector(".desc").innerText = anime.synopsis;
+
+  // 🎬 trailer como player inicial (legal)
+  if (anime.trailer && anime.trailer.embed_url) {
+    document.getElementById("videoPlayer").src = anime.trailer.embed_url;
+  }
+}
+
+// 📚 carregar episódios
+async function loadEpisodes() {
+  const res = await fetch(`https://api.jikan.moe/v4/anime/${id}/episodes`);
+  const data = await res.json();
+
+  const container = document.getElementById("episodes");
+  container.innerHTML = "";
+
+  data.data.slice(0, 20).forEach(ep => {
+    container.innerHTML += `
+      <div class="episode" onclick="playEpisode('${ep.url}')">
+        EP ${ep.mal_id} - ${ep.title}
+      </div>
+    `;
+  });
+}
+
+// ▶️ trocar episódio
+function playEpisode(url) {
+  window.open(url, "_blank"); // redireciona pro oficial
+}
+
+loadAnime();
+loadEpisodes();
+</script>
+
+</body>
+</html>
